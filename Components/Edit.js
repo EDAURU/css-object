@@ -4,7 +4,7 @@ var Edit = function () {
     //***************************** Declaracion de propiedades ********************
     var EditProto = Object.create(HTMLDivElement.prototype);
     var s = new Style();
-    
+    EditProto.hidden = null;
     //***************************** Metodos Callback ******************************
     EditProto.createdCallback = function () {
         
@@ -63,6 +63,24 @@ var Edit = function () {
     }
     EditProto.setGap = function (gap){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[1].style.width=gap;
+    }
+    EditProto.clear = function(){
+        this.setText("");
+    }
+    EditProto.getHiddenValue = function(){
+        return EditProto.hidden;
+    }
+    EditProto.setHiddenValue = function(value){
+        EditProto.hidden = value;
+    } 
+    EditProto.clearHiddenValue = function(){
+        EditProto.hidden = null;
+    }
+    EditProto.disable = function(){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
+    }
+    EditProto.enable = function(){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;
     }
     //***************************** Registro de la clase ************************
     
