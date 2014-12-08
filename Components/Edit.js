@@ -43,6 +43,19 @@ var Edit = function () {
     EditProto.getText = function(){
         return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;
     }
+    EditProto.setCaption = function(text){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=text;
+    }
+    EditProto.setWidth = function(size){
+        this.shadowRoot.getElementsByTagName('table')[0].style.width = size;
+    }
+    EditProto.setHeight = function(size){
+        this.shadowRoot.getElementsByTagName('table')[0].style.height = size;
+    }
+    EditProto.setDimension = function(w, h){
+        this.setWidth(w);
+        this.setHeight(h);
+    }
     //***************************** Registro de la clase ************************
     
     var Edit = document.registerElement('x-edit', {prototype: EditProto, extends: "div"});
