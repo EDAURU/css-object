@@ -82,6 +82,9 @@ var Edit = function () {
     EditProto.enable = function(){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;
     }
+    EditProto.setPlaceHolder = function(text){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder=text;
+    }
     //***************************** Registro de la clase ************************
     
     var Edit = document.registerElement('x-edit', {prototype: EditProto, extends: "div"});
