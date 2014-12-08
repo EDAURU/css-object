@@ -37,6 +37,12 @@ var Edit = function () {
     EditProto.hide = function(){
         this.style.display = 'none';
     }
+    EditProto.setText = function(text){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=text;
+    }
+    EditProto.getText = function(){
+        return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;
+    }
     //***************************** Registro de la clase ************************
     
     var Edit = document.registerElement('x-edit', {prototype: EditProto, extends: "div"});

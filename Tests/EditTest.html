@@ -5,11 +5,17 @@
 </head>
     <body>
         <script>
-			var i = new Edit();
-            document.body.appendChild(i);
-            i.hide();
-            alert('hide test');
-            i.show();
+            if('registerElement' in document){
+                var i = new Edit();
+                document.body.appendChild(i);
+                i.hide();
+                alert('hide test');
+                i.show();
+                i.setText('hola');
+                console.log('getText test : '+ i.getText());
+                
+                
+            }else {alert('web components currently not supported');}
         </script>
     </body>
 </html>
