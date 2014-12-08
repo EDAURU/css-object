@@ -29,11 +29,18 @@ var Edit = function () {
         t.rows[0].cells[2].appendChild(i);
         
     };
+    //*****************************Metodos Publicos******************************
     
+    EditProto.show = function (){
+        this.style.display = 'initial';
+    }
+    EditProto.hide = function(){
+        this.style.display = 'none';
+    }
     //***************************** Registro de la clase ************************
     
     var Edit = document.registerElement('x-edit', {prototype: EditProto, extends: "div"});
     return new Edit();
-    //*****************************Metodos Publicos******************************
-    
+
+
 };
