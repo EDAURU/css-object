@@ -15,9 +15,12 @@
                 console.log('getText test : '+ i.getText());
                 alert('changing caption');
                 i.setCaption('VALOR:');
-                i.setWidth(300);
-                i.setHeight(200);
-                
+                alert('changing dimensions');
+                i.setDimension(300,200);
+                alert('changing position');
+                i.setPosition(20,30);
+                alert('changing gap size');
+                i.setGap(100);
             }else {alert('web components currently not supported');}
         </script>
     </body>

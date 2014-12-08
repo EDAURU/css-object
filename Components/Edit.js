@@ -56,6 +56,14 @@ var Edit = function () {
         this.setWidth(w);
         this.setHeight(h);
     }
+    EditProto.setPosition = function (x, y){
+        this.style.position ='absolute'
+        this.style.left = x;
+        this.style.top = y;
+    }
+    EditProto.setGap = function (gap){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[1].style.width=gap;
+    }
     //***************************** Registro de la clase ************************
     
     var Edit = document.registerElement('x-edit', {prototype: EditProto, extends: "div"});
