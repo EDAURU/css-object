@@ -118,12 +118,12 @@ var Edit = function () {
         this.setFontFamilyEdit(family);
         this.setFontColorEdit(color);
         this.setFontSizeEdit(size);
-    }
+    };
     EditProto.setFontCaption = function(family, color, size){
         this.setFontFamilyCaption(family);
         this.setFontColorCaption(color);
         this.setFontSizeCaption(size);
-    }
+    };
     //***************************** Registro de la clase ************************
     
     var Edit = document.registerElement('x-edit', {prototype: EditProto, extends: "div"});
