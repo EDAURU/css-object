@@ -91,11 +91,22 @@ var Edit = function () {
     }
     EditProto.setFocus = function(f){        
         if(f){
-            console.log('si nacio en los cardonales');
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].focus();
         }else{
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].blur();
         }
+    }
+    EditProto.setFontFamilyEdit = function(font){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily=font;
+    }
+    EditProto.setFontFamilyCaption = function(font){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily=font;
+    }
+    EditProto.setFontColorEdit = function(color){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = color;
+    }
+    EditProto.setFontColorCaption = function(color){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = color;
     }
     //***************************** Registro de la clase ************************
     

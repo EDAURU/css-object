@@ -31,11 +31,17 @@
                 i.enable();
                 alert('setting placeholder');
                 i.setPlaceHolder('aqui va algo');
-                alert('setting input to password type');
-                i.setPassType();
                 alert('input focus');
                 i.setFocus(true);
-                
+                alert('font family input and caption changed');
+                i.setFontFamilyEdit('Verdana');
+                i.setFontFamilyCaption('Verdana');
+                alert('font color changed for input and caption');
+                i.setFontColorEdit('rgba(255,0,0,0.3)');
+                i.setFontColorCaption('rgba(255,0,0,0.3)');
+                alert('setting input to password type');
+                //i.setPassType(); 
+
             }else {alert('web components currently not supported');}
         </script>
     </body>
