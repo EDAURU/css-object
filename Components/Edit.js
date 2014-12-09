@@ -33,80 +33,96 @@ var Edit = function () {
     
     EditProto.show = function (){
         this.style.display = 'initial';
-    }
+    };
     EditProto.hide = function(){
         this.style.display = 'none';
-    }
+    };
     EditProto.setText = function(text){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=text;
-    }
+    };
     EditProto.getText = function(){
         return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;
-    }
+    };
     EditProto.setCaption = function(text){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=text;
-    }
+    };
     EditProto.setWidth = function(size){
         this.shadowRoot.getElementsByTagName('table')[0].style.width = size;
-    }
+    };
     EditProto.setHeight = function(size){
         this.shadowRoot.getElementsByTagName('table')[0].style.height = size;
-    }
+    };
     EditProto.setDimension = function(w, h){
         this.setWidth(w);
         this.setHeight(h);
-    }
+    };
     EditProto.setPosition = function (x, y){
-        this.style.position ='absolute'
+        this.style.position ='absolute';
         this.style.left = x;
         this.style.top = y;
-    }
+    };
     EditProto.setGap = function (gap){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[1].style.width=gap;
-    }
+    };
     EditProto.clear = function(){
         this.setText("");
-    }
+    };
     EditProto.getHiddenValue = function(){
         return EditProto.hidden;
-    }
+    };
     EditProto.setHiddenValue = function(value){
         EditProto.hidden = value;
-    } 
+    } ;
     EditProto.clearHiddenValue = function(){
         EditProto.hidden = null;
-    }
+    };
     EditProto.disable = function(){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
-    }
+    };
     EditProto.enable = function(){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;
-    }
+    };
     EditProto.setPlaceHolder = function(text){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder=text;
-    }
+    };
     EditProto.setPassType = function(){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].removeAttribute('type');
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].setAttribute('type', 'password');
-    }
+    };
     EditProto.setFocus = function(f){        
         if(f){
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].focus();
         }else{
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].blur();
         }
-    }
+    };
     EditProto.setFontFamilyEdit = function(font){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily=font;
-    }
+    };
     EditProto.setFontFamilyCaption = function(font){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily=font;
-    }
+    };
     EditProto.setFontColorEdit = function(color){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = color;
-    }
+    };
     EditProto.setFontColorCaption = function(color){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = color;
+    };
+    EditProto.setFontSizeEdit = function(size){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = size;
+    };
+    EditProto.setFontSizeCaption = function(size){
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = size;
+    };
+    EditProto.setFontEdit = function(family, color, size){
+        this.setFontFamilyEdit(family);
+        this.setFontColorEdit(color);
+        this.setFontSizeEdit(size);
+    }
+    EditProto.setFontCaption = function(family, color, size){
+        this.setFontFamilyCaption(family);
+        this.setFontColorCaption(color);
+        this.setFontSizeCaption(size);
     }
     //***************************** Registro de la clase ************************
     
