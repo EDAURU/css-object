@@ -24,6 +24,17 @@ var Edit = function () {
     set: function(newVal){ this.hidval = newVal;},
     get: function(){return this.hidval;}
     });
+    Object.defineProperty(EditProto,'enabled',{
+    set: function(newVal){
+        if(!newVal)
+            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
+        else if(newVal)
+            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;},
+    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled;}
+    });
+    Object.defineProperty(EditProto,'placeholder',{
+    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder=newVal;},
+    });
     var hidval;
     //***************************** Metodos Callback ******************************
     EditProto.createdCallback = function () {
@@ -74,16 +85,7 @@ var Edit = function () {
         this.value="";
     };
     EditProto.clearHiddenValue = function(){
-        this.hidden = null;
-    };
-    EditProto.disable = function(){
-        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
-    };
-    EditProto.enable = function(){
-        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;
-    };
-    EditProto.setPlaceHolder = function(text){
-        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder=text;
+        this.hidval = null;
     };
     EditProto.setPassType = function(){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].removeAttribute('type');
