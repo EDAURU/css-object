@@ -5,14 +5,26 @@ var Edit = function () {
     var EditProto = Object.create(HTMLDivElement.prototype);
     var s = new Style();
     Object.defineProperty(EditProto,'value', {
-    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=newVal;value=newVal;},
-    get: function(){return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value}
+    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=newVal;},
+    get: function(){return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;}
     });
     Object.defineProperty(EditProto,'caption', {
     set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=newVal;},
-    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML}
+    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML;}
     });
-    EditProto.hidden = null;
+    Object.defineProperty(EditProto,'width',{
+    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].style.width = newVal;},
+    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].style.width;}
+    });
+    Object.defineProperty(EditProto,'height',{
+    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].style.height = newVal;},
+    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].style.height;}
+    });
+    Object.defineProperty(EditProto,'hiddenval', {
+    set: function(newVal){ this.hidval = newVal;},
+    get: function(){return this.hidval;}
+    });
+    var hidval;
     //***************************** Metodos Callback ******************************
     EditProto.createdCallback = function () {
         
@@ -46,15 +58,9 @@ var Edit = function () {
         this.style.display = 'none';
     };
 
-    EditProto.setWidth = function(size){
-        this.shadowRoot.getElementsByTagName('table')[0].style.width = size;
-    };
-    EditProto.setHeight = function(size){
-        this.shadowRoot.getElementsByTagName('table')[0].style.height = size;
-    };
     EditProto.setDimension = function(w, h){
-        this.setWidth(w);
-        this.setHeight(h);
+        this.width=w;
+        this.height=h;
     };
     EditProto.setPosition = function (x, y){
         this.style.position ='absolute';
@@ -65,16 +71,10 @@ var Edit = function () {
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[1].style.width=gap;
     };
     EditProto.clear = function(){
-        this.setText("");
+        this.value="";
     };
-    EditProto.getHiddenValue = function(){
-        return EditProto.hidden;
-    };
-    EditProto.setHiddenValue = function(value){
-        EditProto.hidden = value;
-    } ;
     EditProto.clearHiddenValue = function(){
-        EditProto.hidden = null;
+        this.hidden = null;
     };
     EditProto.disable = function(){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
