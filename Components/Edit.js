@@ -4,6 +4,14 @@ var Edit = function () {
     //***************************** Declaracion de propiedades ********************
     var EditProto = Object.create(HTMLDivElement.prototype);
     var s = new Style();
+    Object.defineProperty(EditProto,'value', {
+    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=newVal;value=newVal;},
+    get: function(){return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value}
+    });
+    Object.defineProperty(EditProto,'caption', {
+    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=newVal;},
+    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML}
+    });
     EditProto.hidden = null;
     //***************************** Metodos Callback ******************************
     EditProto.createdCallback = function () {
@@ -37,15 +45,7 @@ var Edit = function () {
     EditProto.hide = function(){
         this.style.display = 'none';
     };
-    EditProto.setText = function(text){
-        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=text;
-    };
-    EditProto.getText = function(){
-        return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;
-    };
-    EditProto.setCaption = function(text){
-        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=text;
-    };
+
     EditProto.setWidth = function(size){
         this.shadowRoot.getElementsByTagName('table')[0].style.width = size;
     };
