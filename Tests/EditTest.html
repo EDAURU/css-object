@@ -11,10 +11,12 @@
                 i.hide();
                 alert('hide test');
                 i.show();
-                i.setText('hola');
-                console.log('getText test : '+ i.getText());
+                alert('input value test');
+                i.value='hola';
+                alert(i.value);
                 alert('changing caption');
-                i.setCaption('VALOR:');
+                i.caption='VALOR:';
+                alert(i.caption);
                 alert('changing dimensions');
                 i.setDimension(300,200);
                 alert('changing position');
@@ -23,14 +25,14 @@
                 i.setGap(100);
                 alert('clearing text');
                 i.clear();
-                i.setHiddenValue(20);
-                console.log(i.getHiddenValue());
+                i.hiddenval=20;
+                console.log(i.hiddenval);
                 alert('input disable');
-                i.disable();
+                i.enabled=false;
                 alert('input enable');
-                i.enable();
+                i.enabled=true;
                 alert('setting placeholder');
-                i.setPlaceHolder('aqui va algo');
+                i.placeholder='aqui va algo';
                 alert('input focus');
                 i.setFocus(true);
                 alert('font family input and caption changed');
@@ -43,7 +45,7 @@
                 i.setFontSizeEdit('large');
                 i.setFontSizeCaption('x-large');
                 alert('setting input to password type');
-                //i.setPassType(); 
+                i.setPassType(); 
 
             }else {alert('web components currently not supported');}
         </script>
