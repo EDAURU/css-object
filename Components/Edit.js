@@ -4,37 +4,31 @@ var Edit = function () {
     //***************************** Declaracion de propiedades ********************
     var EditProto = Object.create(HTMLDivElement.prototype);
     var s = new Style();
-    Object.defineProperty(EditProto,'value', {
+    Object.defineProperties(EditProto,{"value":{
     set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=newVal;},
     get: function(){return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;}
-    });
-    Object.defineProperty(EditProto,'caption', {
+    },"caption": {
     set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=newVal;},
     get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML;}
-    });
-    Object.defineProperty(EditProto,'width',{
+    },"width":{
     set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].style.width = newVal;},
     get: function() {return this.shadowRoot.getElementsByTagName('table')[0].style.width;}
-    });
-    Object.defineProperty(EditProto,'height',{
+    },"height":{
     set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].style.height = newVal;},
     get: function() {return this.shadowRoot.getElementsByTagName('table')[0].style.height;}
-    });
-    Object.defineProperty(EditProto,'hiddenval', {
+    },"hiddenval": {
     set: function(newVal){ this.hidval = newVal;},
     get: function(){return this.hidval;}
-    });
-    Object.defineProperty(EditProto,'enabled',{
+    },"enabled":{
     set: function(newVal){
         if(!newVal)
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
         else if(newVal)
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;},
     get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled;}
-    });
-    Object.defineProperty(EditProto,'placeholder',{
+    },"placeholder":{
     set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder=newVal;},
-    });
+    }});
     var hidval;
     //***************************** Metodos Callback ******************************
     EditProto.createdCallback = function () {
