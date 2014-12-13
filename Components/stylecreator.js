@@ -101,43 +101,31 @@ var Edit = function () {
     var s = new Style();
     var hidval;
     
-    Object.defineProperty(EditProto,'value', {
-    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value = newVal;},
-    get: function(){return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;}
-    });
-    
-    Object.defineProperty(EditProto,'caption', {
-    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML = newVal;},
-    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML;}
-    });
-    
-    Object.defineProperty(EditProto,'width',{
-    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].style.width = newVal;},
-    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].style.width;}
-    });
-    
-    Object.defineProperty(EditProto,'height',{
-    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].style.height = newVal;},
-    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].style.height;}
-    });
-    
-    Object.defineProperty(EditProto,'hiddenval', {
-    set: function(newVal){ this.hidval = newVal;},
-    get: function(){return this.hidval;}
-    });
-    
-    Object.defineProperty(EditProto,'enabled',{
-    set: function(newVal){
+    Object.defineProperties(EditProto,{"value":{
+    set: function (newVal) {this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=newVal;},
+    get: function () {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;}
+    },"caption": {
+    set: function (newVal) {this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML=newVal;},
+    get: function () {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].innerHTML;}
+    },"width":{
+    set: function (newVal) {this.shadowRoot.getElementsByTagName('table')[0].style.width = newVal;},
+    get: function () {return this.shadowRoot.getElementsByTagName('table')[0].style.width;}
+    },"height":{
+    set: function (newVal) {this.shadowRoot.getElementsByTagName('table')[0].style.height = newVal;},
+    get: function () {return this.shadowRoot.getElementsByTagName('table')[0].style.height;}
+    },"hiddenval": {
+    set: function (newVal) { this.hidval = newVal;},
+    get: function () {return this.hidval;}
+    },"enabled":{
+    set: function (newVal) {
         if (!newVal)
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=true;
         else if (newVal)
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled=false;},
-    get: function() {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled;}
-    });
-    
-    Object.defineProperty(EditProto,'placeholder',{
-    set: function(newVal){this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder = newVal;},
-    });
+    get: function () {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].disabled;}
+    },"placeholder":{
+    set: function (newVal) {this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder=newVal;},
+    }});
     
     //*****************************Metodos Publicos******************************
     
