@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<script src="../components/stylecreator.js"></script>
+	</head>
+	<body>
+		<script>
+			if ('registerElement' in document) {
+				var i = new Edit("50px", "Nombre: ");
+				document.body.appendChild(i);
+				i.hide();
+				alert('hide test');
+				i.show();
+				alert('input value test');
+				i.value = 'hola';
+				alert(i.value);
+				alert('changing caption');
+				i.caption = 'VALOR:';
+				alert(i.caption);
+				alert('changing dimensions');
+				i.setDimension(300, 200);
+				alert('changing position');
+				i.setPosition(20, 30);
+				alert('changing gap size');
+				i.setGap(100);
+				alert('clearing text');
+				i.clear();
+				i.hiddenval = 20;
+				console.log(i.hiddenval);
+				alert('input disable');
+				i.enabled = false;
+				alert('input enable');
+				i.enabled = true;
+				alert('setting placeholder');
+				i.placeholder = 'aqui va algo';
+				alert('input focus');
+				i.setFocus(true);
+				alert('font family input and caption changed');
+				i.setFontFamilyEdit('Verdana');
+				i.setFontFamilyCaption('Verdana');
+				alert('font color changed for input and caption');
+				i.setFontColorEdit('rgba(255,0,0,0.7)');
+				i.setFontColorCaption('rgba(255,0,0,0.8)');
+				alert('setting font size for both caption and edit');
+				i.setFontSizeEdit('large');
+				i.setFontSizeCaption('x-large');
+				alert('setting input to password type');
+				i.setPassType();
+
+			} else {
+				alert('web components currently not supported');
+			}
+		</script>
+	</body>
+</html>
