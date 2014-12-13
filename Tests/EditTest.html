@@ -5,7 +5,7 @@
     <body>
         <script>
             if('registerElement' in document){
-                var i = new Edit("100px", "100px", "nombre: ");
+                var i = new Edit("50px", "Nombre: ");
                 document.body.appendChild(i);
                 i.hide();
                 alert('hide test');
@@ -44,7 +44,7 @@
                 i.setFontSizeEdit('large');
                 i.setFontSizeCaption('x-large');
                 alert('setting input to password type');
-                i.setPassType(); 
+                i.setPassType();
                 
             }else {alert('web components currently not supported');}
         </script>

@@ -1,8 +1,6 @@
 var environment = 0;
 var Style = function () {
     
-    //this.setEnvironment = function (newEnvironment) { environment = newEnvironment; };
-    
     this.Background = { 
         background_attachment: [], 
         background_color: [], 
@@ -175,45 +173,33 @@ var Edit = function (w, h, title) {
     };
     
     EditProto.setFontFamilyEdit = function (font){
-        if (typeof font == "number")
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = s.Font.font_family[font];
-        else
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = font
+        typeof font == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = s.Font.font_family[font] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = font
     };
     
     EditProto.setFontFamilyCaption = function (font){
-        if (typeof font == "number")
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily = s.Font.font_family[font];
-        else
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily = font;
+        typeof font == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily = s.Font.font_family[font] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily = font;
     };
     
     EditProto.setFontColorEdit = function (color){
-        if (typeof color == "number")
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = s.Text.color[color];
-        else
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = color;
+        typeof color == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = s.Text.color[color] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = color;
     };
     
     EditProto.setFontColorCaption = function (color){
-        if (typeof color == "number")
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = s.Text.color[color];
-        else
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = color;
+        typeof color == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = s.Text.color[color] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = color;
     };
     
     EditProto.setFontSizeEdit = function (size){
-        if (typeof size == "number")
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = s.Font.font_size[size];
-        else
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = size;
+        typeof size == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = s.Font.font_size[size] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = size;
     };
     
     EditProto.setFontSizeCaption = function (size){
-        if (typeof size == "number")
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = s.Font.font_size[size];
-        else
-            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = size;
+        typeof size == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = s.Font.font_size[size] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = size;
     };
     
     EditProto.setFontEdit = function (family, color, size){
@@ -304,8 +290,6 @@ var Edit = function (w, h, title) {
                     this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderRightStyle = right;
             }
         }
-        
-        
     };
     
     EditProto.setBorderRadius = function (v1, v2, v3, v4) {
@@ -386,6 +370,193 @@ var Edit = function (w, h, title) {
         }
     };
     
+    EditProto.setBorderColor = function (top, bottom, left, right) {
+        if (arguments.length === 1) {
+            if (typeof top == "number")
+                this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderColor = s.Border.border_color[top];
+            else
+                this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderColor = top;
+        }
+        
+        if (arguments.length === 2) {
+            if (top != null) {
+                if (typeof top == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopColor = s.Border.border_top_color[top];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopColor = top;
+            }
+            
+            if (bottom != null) {
+                if (typeof bottom == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomColor = s.Border.border_bottom_color[bottom];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomColor = bottom;
+            }
+        }
+        
+        if (arguments.length === 3) {
+            if(top != null) {
+                if (typeof top == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopColor = s.Border.border_top_color[top];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopColor = top;
+            }
+            
+            if (bottom != null) {
+                if (typeof bottom == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomColor = s.Border.border_bottom_color[bottom];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomColor = bottom;
+            }
+            
+            if (left != null) {
+                if (typeof left == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftColor = s.Border.border_left_color[left];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftColor = left;
+            }
+        }
+        
+        if (arguments.length === 4) {
+            if(top != null) {
+                if (typeof top == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopColor = s.Border.border_top_color[top];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopColor = top;
+            }
+            
+            if (bottom != null) {
+                if (typeof bottom == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomColor = s.Border.border_bottom_color[bottom];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomColor = bottom;
+            }
+            
+            if (left != null) {
+                if (typeof left == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftColor = s.Border.border_left_color[left];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftColor = left;
+            }
+            
+            if (right != null) {
+                if (typeof right == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderRightColor = s.Border.border_right_color[right];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderRightColor = right;
+            }
+        }
+    };
+    
+    EditProto.setBorderSize = function (top, bottom, left, right) {
+        if (arguments.length === 1) {
+            if (typeof top == "number")
+                this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderWidth = s.Border.border_width[top];
+            else
+                this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderWidth = top;
+        }
+        
+        if (arguments.length === 2) {
+            if (top != null) {
+                if (typeof top == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopWidth = s.Border.border_top_width[top];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopWidth = top;
+            }
+            
+            if (bottom != null) {
+                if (typeof bottom == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomWidth = s.Border.border_bottom_width[bottom];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomWidth = bottom;
+            }
+        }
+        
+        if (arguments.length === 3) {
+            if (top != null) {
+                if (typeof top == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopWidth = s.Border.border_top_width[top];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopWidth = top;
+            }
+            
+            if (bottom != null) {
+                if (typeof bottom == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomWidth = s.Border.border_bottom_width[bottom];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomWidth = bottom;
+            }
+            
+            if (left != null) {
+                if (typeof left == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftWidth = s.Border.border_left_width[left];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftWidth = left;
+            }
+        }
+        
+        if (arguments.length === 4) {
+            if (top != null) {
+                if (typeof top == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopWidth = s.Border.border_top_width[top];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderTopWidth = top;
+            }
+            
+            if (bottom != null) {
+                if (typeof bottom == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomWidth = s.Border.border_bottom_width[bottom];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderBottomWidth = bottom;
+            }
+            
+            if (left != null) {
+                if (typeof left == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftWidth = s.Border.border_left_width[left];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderLeftWidth = left;
+            }
+            
+            if (right != null) {
+                if (typeof right == "number")
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderRightWidth = s.Border.border_left_width[right];
+                else
+                    this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.borderRightWidth = right;
+            }
+        }
+    };
+    
+    EditProto.setBackgroundColor = function (color) {
+        typeof color == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.backgroundColor = s.Background.background_color[color] :
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.backgroundColor = color;
+    };
+    
+    EditProto.setBackgroundImage = function (image) {
+      if (typeof image == "number") {
+          this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.backgroundImage = s.Background.background_image[image];
+          this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.backgroundSize = "contain";
+      }else {
+          this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.backgroundImage = image;
+          this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.backgroundSize = "contain";
+      }
+    };
+    
+    EditProto.showGrid = function () {
+        for (var i = 0; i <= 2; i++){
+            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[i].style.border = "2px solid black";
+        }
+        
+        this.style.border = "2px solid black";
+    };
+    
+    EditProto.hideGrid = function () {
+        for (var i = 0; i <= 2; i++){
+            this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[i].style.border = "none";
+        }
+        
+        this.style.border = "none";
+    };
+    
     //***************************** Metodos Callback ******************************
     
     EditProto.createdCallback = function () {
@@ -403,7 +574,7 @@ var Edit = function (w, h, title) {
         
         var l = document.createElement("label");
         var tx = document.createTextNode("Valor: ");
-        tx.textContent = title;
+        title === undefined ? tx.textContent = 'Titulo Opcional: ' : tx.textContent = title;
         l.appendChild(tx);
         t.rows[0].cells[0].appendChild(l);
         
