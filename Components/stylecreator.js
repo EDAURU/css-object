@@ -584,6 +584,10 @@ var Edit = function (w, h, title) {
 
 		this.style.border = "none";
 	};
+    
+    EditProto.setMaxLength = function (length) {
+        this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].maxLength = length;
+    };
 
 	//***************************** Metodos Callback ******************************
 
