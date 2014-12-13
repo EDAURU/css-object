@@ -93,7 +93,7 @@ var Style = function () {
     };
 };
 
-var Edit = function () {
+var Edit = function (w, h, title) {
     
     //***************************** Declaracion de propiedades ********************
     
@@ -101,7 +101,8 @@ var Edit = function () {
     var s = new Style();
     var hidval;
     
-    Object.defineProperties(EditProto,{"value":{
+    
+    Object.defineProperties (EditProto,{"value":{
     set: function (newVal) {this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value=newVal;},
     get: function () {return this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;}
     },"caption": {
@@ -133,11 +134,11 @@ var Edit = function () {
         this.style.display = 'initial';
     };
     
-    EditProto.hide = function(){
+    EditProto.hide = function (){
         this.style.display = 'none';
     };
 
-    EditProto.setDimension = function(w, h){
+    EditProto.setDimension = function (w, h){
         this.width=w;
         this.height=h;
     };
@@ -152,20 +153,20 @@ var Edit = function () {
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[1].style.width = gap;
     };
     
-    EditProto.clear = function(){
+    EditProto.clear = function (){
         this.value="";
     };
     
-    EditProto.clearHiddenValue = function(){
+    EditProto.clearHiddenValue = function (){
         this.hidval = null;
     };
     
-    EditProto.setPassType = function(){
+    EditProto.setPassType = function (){
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].removeAttribute('type');
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].setAttribute('type', 'password');
     };
     
-    EditProto.setFocus = function(f){        
+    EditProto.setFocus = function (f){        
         if (f) {
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].focus();
         }else{
@@ -173,55 +174,55 @@ var Edit = function () {
         }
     };
     
-    EditProto.setFontFamilyEdit = function(font){
+    EditProto.setFontFamilyEdit = function (font){
         if (typeof font == "number")
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = s.Font.font_family[font];
         else
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = font
     };
     
-    EditProto.setFontFamilyCaption = function(font){
+    EditProto.setFontFamilyCaption = function (font){
         if (typeof font == "number")
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily = s.Font.font_family[font];
         else
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontFamily = font;
     };
     
-    EditProto.setFontColorEdit = function(color){
+    EditProto.setFontColorEdit = function (color){
         if (typeof color == "number")
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = s.Text.color[color];
         else
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.color = color;
     };
     
-    EditProto.setFontColorCaption = function(color){
+    EditProto.setFontColorCaption = function (color){
         if (typeof color == "number")
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = s.Text.color[color];
         else
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.color = color;
     };
     
-    EditProto.setFontSizeEdit = function(size){
+    EditProto.setFontSizeEdit = function (size){
         if (typeof size == "number")
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = s.Font.font_size[size];
         else
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontSize = size;
     };
     
-    EditProto.setFontSizeCaption = function(size){
+    EditProto.setFontSizeCaption = function (size){
         if (typeof size == "number")
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = s.Font.font_size[size];
         else
             this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[0].getElementsByTagName('label')[0].style.fontSize = size;
     };
     
-    EditProto.setFontEdit = function(family, color, size){
+    EditProto.setFontEdit = function (family, color, size){
         this.setFontFamilyEdit(family);
         this.setFontColorEdit(color);
         this.setFontSizeEdit(size);
     };
     
-    EditProto.setFontCaption = function(family, color, size){
+    EditProto.setFontCaption = function (family, color, size){
         this.setFontFamilyCaption(family);
         this.setFontColorCaption(color);
         this.setFontSizeCaption(size);
@@ -402,13 +403,15 @@ var Edit = function () {
         
         var l = document.createElement("label");
         var tx = document.createTextNode("Valor: ");
+        tx.textContent = title;
         l.appendChild(tx);
         t.rows[0].cells[0].appendChild(l);
         
         var i = document.createElement("input");
         i.setAttribute("type", "text");
+        i.style.width = w;
+        i.style.height = h;
         t.rows[0].cells[2].appendChild(i);
-        
     };
     
     //***************************** Registro de la clase ************************

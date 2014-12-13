@@ -1,12 +1,11 @@
 <html>
 <head>
-    <script src = "../Components/Edit.js"></script>
     <script src="../Components/stylecreator.js"></script>
 </head>
     <body>
         <script>
             if('registerElement' in document){
-                var i = new Edit();
+                var i = new Edit("100px", "100px", "nombre: ");
                 document.body.appendChild(i);
                 i.hide();
                 alert('hide test');
