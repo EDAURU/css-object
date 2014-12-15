@@ -590,10 +590,7 @@ var Edit = function (w, h, title) {
     };
     
     EditProto.isEmpty = function () {
-        if (this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value == "") 
-            return true;
-        else
-            return false;
+        return (this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value == "") 
     };
     
     EditProto.isEmail = function () {
