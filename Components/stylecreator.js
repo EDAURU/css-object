@@ -588,6 +588,23 @@ var Edit = function (w, h, title) {
     EditProto.setMaxLength = function (length) {
         this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].maxLength = length;
     };
+    
+    EditProto.isEmpty = function () {
+        if (this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value == "") 
+            return true;
+        else
+            return false;
+    };
+    
+    EditProto.isEmail = function () {
+        var editText = this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;
+        var exp1 = /(\s|\u002e{2}|[!$%#·€¬7^&*()+|~=`{}\[\]:";'<>?,\/ñ´¨]|(_|\u002e|-)(?=@)|(?=_)|(?=-))/.test(editText);
+        var exp2 = editText.match(/[@]/g);
+        if (editText.indexOf("@") < 1 || editText.indexOf(".") < 1 || editText.lastIndexOf(".") < editText.indexOf("@") + 2 || editText.lastIndexOf(".") + 3 >= editText.length || exp1 || (exp2 !== null && exp2.length > 1))
+                return false
+        else
+                return true
+    };
 
 	//***************************** Metodos Callback ******************************
 
