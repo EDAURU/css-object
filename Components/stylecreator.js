@@ -202,7 +202,7 @@ var Edit = function (w, h, title) {
 
 	EditProto.setFontFamilyEdit = function (font) {
 		typeof font == "number" ? this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = s.Font.font_family[font] :
-			this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = font
+			this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].style.fontFamily = font;
 	};
 
 	EditProto.setFontFamilyCaption = function (font) {
@@ -590,18 +590,27 @@ var Edit = function (w, h, title) {
     };
     
     EditProto.isEmpty = function () {
-        return (this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value == "") 
+        return (this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value == ""); 
     };
     
     EditProto.isEmail = function () {
         var editText = this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value;
-        var exp1 = /(\s|\u002e{2}|[!$%#·€¬7^&*()+|~=`{}\[\]:";'<>?,\/ñ´¨]|(_|\u002e|-)(?=@)|(?=_)|(?=-))/.test(editText);
+        var exp1 = /(\s|\u002e{2}|[\u005b\u005d\u005e]|(_|\u002e|-)(?=@)|(?=_)|(?=-))/.test(editText);
         var exp2 = editText.match(/[@]/g);
-        if (editText.indexOf("@") < 1 || editText.indexOf(".") < 1 || editText.lastIndexOf(".") < editText.indexOf("@") + 2 || editText.lastIndexOf(".") + 3 >= editText.length || exp1 || (exp2 !== null && exp2.length > 1))
+        var exp3 = /^[A-z0-9\u002e@]+$/g.test(editText);
+        if (editText.indexOf("@") < 1 || editText.indexOf(".") < 1 || editText.lastIndexOf(".") < editText.indexOf("@") + 2 || editText.lastIndexOf(".") + 3 >= editText.length || exp1 || (exp2 !== null && exp2.length > 1) || !exp3)
                 return false
         else
                 return true
     };
+    
+    EditProto.isDigit = function () {
+        return (/^[\d]+$/g.test(this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value));
+    };
+    
+    EditProto.isLetter = function () {
+        return (/^[A-z]+$/g.test(this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value));
+    }; 
 
 	//***************************** Metodos Callback ******************************
 
