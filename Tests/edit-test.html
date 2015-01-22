@@ -5,9 +5,58 @@
 	<body>
 		<script>
 			if ('registerElement' in document) {
-				var i = new Edit("50px", "Nombre: ");
+				var i = new Edit("null", "null", "Validador ");
 				document.body.appendChild(i);
-				i.hide();
+				i.setBorderColor("blue");
+				i.setBorderRadius("10px");
+				var btnEmpty = document.createElement("input");
+				btnEmpty.setAttribute("type", "button");
+				btnEmpty.value = "Empty";
+				btnEmpty.onclick = function (e) {
+					if (i.isEmpty())
+						alert("Esta vacio");
+					else
+						alert("No esta vacio");
+				}
+
+				document.body.appendChild(btnEmpty);
+
+				var btnDigit = document.createElement("input");
+				btnDigit.setAttribute("type", "button");
+				btnDigit.value = "Digit";
+				btnDigit.onclick = function (e) {
+					if (i.isDigit())
+						alert("Los valores son numericos");
+					else
+						alert("Los valores no son numericos");
+				}
+
+				document.body.appendChild(btnDigit);
+
+				var btnLetter = document.createElement("input");
+				btnLetter.setAttribute("type", "button");
+				btnLetter.value = "Letter";
+				btnLetter.onclick = function (e) {
+					if (i.isLetter())
+						alert("Los valores son letras");
+					else
+						alert("Los valores no son letras");
+				}
+
+				document.body.appendChild(btnLetter);
+
+				var btnEmail = document.createElement("input");
+				btnEmail.setAttribute("type", "button");
+				btnEmail.value = "Email";
+				btnEmail.onclick = function (e) {
+					if (i.isEmail())
+						alert("Es un email valido");
+					else
+						alert("Es un email invalido");
+				}
+
+				document.body.appendChild(btnEmail);
+				/*i.hide();
 				alert('hide test');
 				i.show();
 				alert('input value test');
@@ -43,8 +92,8 @@
 				alert('setting font size for both caption and edit');
 				i.setFontSizeEdit('large');
 				i.setFontSizeCaption('x-large');
-				alert('setting input to password type');
-				i.setPassType();
+				alert('setting input to password type');*/
+				//i.setPassType();
 
 			} else {
 				alert('web components currently not supported');

@@ -150,7 +150,7 @@ var Edit = function (w, h, title) {
 		}, "placeholder": {
 			set: function (newVal) {
 				this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].placeholder = newVal;
-			},
+			}
 		}
 	});
 
@@ -657,17 +657,23 @@ var ObjectGroup = function (w, h, title) {
 	Object.defineProperties(ObjectGroupProto, {
 		"width": {
 			set: function (newVal) {
+				this.style.width = newVal;
 				this.shadowRoot.getElementsByTagName('canvas')[0].width = newVal;
+				setTimeout(function () {
+					this.shadowRoot.getElementsByTagName('div')[0].style.left = calculateLeft(this.shadowRoot.getElementsByTagName('div')[0], this.shadowRoot.getElementsByTagName('canvas')[0]);
+				}, 10);
 			},
 			get: function () {
-				return this.shadowRoot.getElementsByTagName('canvas')[0].width;
+				return this.style.width;
 			}
 		}, "height": {
 			set: function (newVal) {
+				this.style.height = newVal;
 				this.shadowRoot.getElementsByTagName('canvas')[0].height = newVal;
+				this.shadowRoot.getElementsByTagName('div')[0]=parseInt(this.shadowRoot.getElementsByTagName('canvas')[0].style.top)+20+'px';
 			},
 			get: function () {
-				return this.shadowRoot.getElementsByTagName('canvas')[0].height;
+				return this.style.height;
 			}
 		}, "header": {
 			set: function (newVal) {
@@ -676,20 +682,35 @@ var ObjectGroup = function (w, h, title) {
 			get: function () {
 				return this.shadowRoot.getElementsByTagName('div')[0].innerHTML;
 			}
+		}, "left" :{
+			set: function(newVal){
+				this.style.left=newVal;
+			},
+			get: function(){
+				return this.style.left;
+			}
+		}, "top" :{
+				set: function(newVal){
+					this.style.top=newVal;
+				},
+				get: function(){
+					return this.style.top;
+			}
 		}
 	});
 
 	//***************************** Metodos Callback ******************************
 	ObjectGroupProto.createdCallback = function () {
 		// all properties of the object must be set here, this is just a test.
+		this.style.position= 'absolute';
 		var shadow = this.createShadowRoot();
+		if(ObjectGroup.width === undefined || ObjectGroup.width === null)  ObjectGroup.width = 500;
+		if(ObjectGroup.height === undefined || ObjectGroup.height === null)  ObjectGroup.height = 500;
 		//canvas setting
 		var t = document.createElement("canvas");
-		var width = parseInt(w);
-		var height = parseInt(h);
 		t.style.position = 'absolute';
-		w === undefined || w === null ? t.width = 500 : t.width = width;
-		h === undefined || h === null ? t.height = 500 : t.height = height;
+		ObjectGroup.width === undefined || ObjectGroup.width === null ? t.width = 500 : t.width = ObjectGroup.width;
+		ObjectGroup.height === undefined || ObjectGroup.height === null ? t.height = 500 : t.height = ObjectGroup.height;
 		//margen y borde del canvas
 		t.style.margin = 20;
 		t.style.borderStyle = 'solid';
@@ -726,20 +747,16 @@ var ObjectGroup = function (w, h, title) {
 		this.width = w;
 		this.height = h;
 	};
-	/*ObjectGroupProto.setPosition = function(x,y){
-	 this.shadowRoot.getElementsByTagName('canvas')[0].style.left=x;
-	 this.shadowRoot.getElementsByTagName('canvas')[0].style.top=y;
-	 for(var i = 1; i< this.shadowRoot.children.length;i++){
-	 if(i==1){
-	 var opvarx = calculateLeft(this.shadowRoot.children[1],this.shadowRoot.getElementsByTagName('canvas')[0]);
-	 var opvary= y+20;
-	 opvarx=parseInt(opvarx)+x;
-	 console.log(opvarx);
-	 this.shadowRoot.children[i].style.left='386px';
-	 this.shadowRoot.children[i].style.top=opvary;
-	 }
-	 }
-	 };*/
+	ObjectGroupProto.setPosition = function(x,y){
+	 this.left=x;
+	 this.top=y;
+	 };
+	ObjectGroupProto.addObject = function(object,x,y){
+		this.shadowRoot.appendChild(object);
+		object.style.position = 'absolute';
+		typeof x ==='string'? object.style.left=x:object.style.left=x+'px';
+		typeof y ==='string'? object.style.top=y:object.style.top=y+'px';
+	}
 
 	//***************************** Registro de la clase ************************
 
