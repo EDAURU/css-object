@@ -16,6 +16,20 @@
 			a.header = 'Hola Mundo';
 			alert('setPosition test');
 			a.setPosition(200,70);
+			var b = new Edit(null,null,"Kike");
+			a.addObject(b,20,20);
+			a.hide();
+			alert("hidden, now showing");
+			a.show();
+			alert('title method testing');
+			a.setColorTitle('#FFFFFF');
+			a.setFontFamilyTitle('Verdana');
+			a.setFontSizeTitle('small');
+			a.setBgColorTitle('rgba(200,5,12,0.8)');
+			alert('now borders testing')
+			a.setBorderColor('rgb(200,200,200)');
+			a.setBorderStyle('dotted');
+			a.setBorderWidth('thick');
 		} else {
 			alert('web components currently not supported');
 		}

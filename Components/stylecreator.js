@@ -722,7 +722,7 @@ var ObjectGroup = function (w, h, title) {
 		titlediv.style.position = 'absolute';
 		shadow.appendChild(titlediv);
 		//atributos del titulo
-		titlediv.style.top = 20;
+		titlediv.style.top = 10;
 		titlediv.style.fontFamily = 'Arial';
 		titlediv.style.fontSize = 'medium';
 		titlediv.style.color = 'red';
@@ -752,12 +752,55 @@ var ObjectGroup = function (w, h, title) {
 	 this.top=y;
 	 };
 	ObjectGroupProto.addObject = function(object,x,y){
-		this.shadowRoot.appendChild(object);
 		object.style.position = 'absolute';
+		//for it not to overshadow the title
+		var titleh=parseInt(this.shadowRoot.getElementsByTagName('div')[0].style.top);
 		typeof x ==='string'? object.style.left=x:object.style.left=x+'px';
-		typeof y ==='string'? object.style.top=y:object.style.top=y+'px';
-	}
-
+		typeof y ==='string'? object.style.top=parseInt(y)+titleh+'px':object.style.top=y+titleh+'px';
+		this.shadowRoot.appendChild(object);
+		console.log(object.style.left);
+	};
+	ObjectGroupProto.show = function (){
+		this.style.display='block';
+	};
+	ObjectGroupProto.hide = function(){
+		this.style.display='none';
+	};
+	ObjectGroupProto.setColorTitle = function(color) {
+		if (typeof color === 'string') {
+			this.shadowRoot.getElementsByTagName('div')[0].style.color = color;
+		}
+	};
+	ObjectGroupProto.setFontFamilyTitle = function(fontfam){
+		if(typeof fontfam === 'string'){
+			this.shadowRoot.getElementsByTagName('div')[0].style.fontFamily = fontfam;
+		}
+	};
+	ObjectGroupProto.setFontSizeTitle = function(size){
+		if(typeof size === 'string'){
+			this.shadowRoot.getElementsByTagName('div')[0].style.fontSize = size;
+		}
+	};
+	ObjectGroupProto.setBgColorTitle = function(bg){
+		if(typeof bg === 'string'){
+			this.shadowRoot.getElementsByTagName('div')[0].style.backgroundColor = bg;
+		}
+	};
+	ObjectGroupProto.setBorderStyle = function(style){
+		if(typeof style === 'string'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderStyle = style;
+		}
+	};
+	ObjectGroupProto.setBorderColor = function(bordercol){
+		if(typeof bordercol === 'string'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderColor = bordercol;
+		}
+	};
+	ObjectGroupProto.setBorderWidth = function(width){
+		if(typeof width === 'string'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderWidth = width;
+		}
+	};
 	//***************************** Registro de la clase ************************
 
 	var ObjectGroup = document.registerElement('x-objectgroup', {prototype: ObjectGroupProto, extends: "div"});
