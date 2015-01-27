@@ -5,7 +5,7 @@
 	<body>
 		<script>
 		if ('registerElement' in document) {
-			var a = new ObjectGroup(null, null, 'hola');
+			var a = new ObjectGroup();
 			document.body.appendChild(a);
 			alert('width and height properties test');
 			a.width = 200;
@@ -14,6 +14,8 @@
 			a.setDimension(400, 400);
 			alert('change title test');
 			a.header = 'Hola Mundo';
+			alert('setPosition test');
+			a.setPosition(200,70);
 		} else {
 			alert('web components currently not supported');
 		}
