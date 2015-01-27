@@ -828,7 +828,6 @@ var ObjectGroup = function (w, h, title) {
 			titlediv.style.left = calculateLeft(titlediv, t);
 		}, 10);
 	};
-        
 	//*****************************Metodos Privados******************************
 	function calculateLeft(div, can) {
 		var divsize = parseInt(div.offsetWidth);
@@ -843,16 +842,10 @@ var ObjectGroup = function (w, h, title) {
 		this.width = w;
 		this.height = h;
 	};
-<<<<<<< HEAD
-        
-=======
->>>>>>> 99e6ce5ee44b6bcb51543792d033a111f377d7f3
 	ObjectGroupProto.setPosition = function(x,y){
 	 this.left=x;
 	 this.top=y;
 	 };
-<<<<<<< HEAD
-        
 	ObjectGroupProto.addObject = function(object,x,y){
 		object.style.position = 'absolute';
 		//for it not to overshadow the title
@@ -862,66 +855,47 @@ var ObjectGroup = function (w, h, title) {
 		this.shadowRoot.appendChild(object);
 		console.log(object.style.left);
 	};
-        
 	ObjectGroupProto.show = function (){
 		this.style.display='block';
 	};
-        
 	ObjectGroupProto.hide = function(){
 		this.style.display='none';
 	};
-        
 	ObjectGroupProto.setColorTitle = function(color) {
 		if (typeof color === 'string') {
 			this.shadowRoot.getElementsByTagName('div')[0].style.color = color;
 		}
 	};
-        
 	ObjectGroupProto.setFontFamilyTitle = function(fontfam){
 		if(typeof fontfam === 'string'){
 			this.shadowRoot.getElementsByTagName('div')[0].style.fontFamily = fontfam;
 		}
 	};
-        
 	ObjectGroupProto.setFontSizeTitle = function(size){
 		if(typeof size === 'string'){
 			this.shadowRoot.getElementsByTagName('div')[0].style.fontSize = size;
 		}
 	};
-        
 	ObjectGroupProto.setBgColorTitle = function(bg){
 		if(typeof bg === 'string'){
 			this.shadowRoot.getElementsByTagName('div')[0].style.backgroundColor = bg;
 		}
 	};
-        
 	ObjectGroupProto.setBorderStyle = function(style){
 		if(typeof style === 'string'){
 			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderStyle = style;
 		}
 	};
-        
 	ObjectGroupProto.setBorderColor = function(bordercol){
 		if(typeof bordercol === 'string'){
 			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderColor = bordercol;
 		}
 	};
-        
 	ObjectGroupProto.setBorderWidth = function(width){
 		if(typeof width === 'string'){
 			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderWidth = width;
 		}
 	};
-        
-=======
-	ObjectGroupProto.addObject = function(object,x,y){
-		this.shadowRoot.appendChild(object);
-		object.style.position = 'absolute';
-		typeof x ==='string'? object.style.left=x:object.style.left=x+'px';
-		typeof y ==='string'? object.style.top=y:object.style.top=y+'px';
-	}
-
->>>>>>> 99e6ce5ee44b6bcb51543792d033a111f377d7f3
 	//***************************** Registro de la clase ************************
 
 	var ObjectGroup = document.registerElement('x-objectgroup', {prototype: ObjectGroupProto, extends: "div"});
