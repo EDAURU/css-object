@@ -722,25 +722,172 @@ var ObjectGroup = function (w, h, title) {
 
 	//*****************************Metodos Publicos******************************
 
+	var ObjectGroup = function (w, h, title) {
+
+	//***************************** Declaracion de propiedades ********************
+	var ObjectGroupProto = Object.create(HTMLDivElement.prototype);
+	var s = new Style();
+
+	Object.defineProperties(ObjectGroupProto, {
+		"width": {
+			set: function (newVal) {
+				this.style.width = newVal;
+				this.shadowRoot.getElementsByTagName('canvas')[0].width = newVal;
+				setTimeout(function () {
+					this.shadowRoot.getElementsByTagName('div')[0].style.left = calculateLeft(this.shadowRoot.getElementsByTagName('div')[0], this.shadowRoot.getElementsByTagName('canvas')[0]);
+				}, 10);
+			},
+			get: function () {
+				return this.style.width;
+			}
+		}, "height": {
+			set: function (newVal) {
+				this.style.height = newVal;
+				this.shadowRoot.getElementsByTagName('canvas')[0].height = newVal;
+				this.shadowRoot.getElementsByTagName('div')[0]=parseInt(this.shadowRoot.getElementsByTagName('canvas')[0].style.top)+20+'px';
+			},
+			get: function () {
+				return this.style.height;
+			}
+		}, "header": {
+			set: function (newVal) {
+				this.shadowRoot.getElementsByTagName('div')[0].innerHTML = newVal;
+			},
+			get: function () {
+				return this.shadowRoot.getElementsByTagName('div')[0].innerHTML;
+			}
+		}, "left" :{
+			set: function(newVal){
+				this.style.left=newVal;
+			},
+			get: function(){
+				return this.style.left;
+			}
+		}, "top" :{
+				set: function(newVal){
+					this.style.top=newVal;
+				},
+				get: function(){
+					return this.style.top;
+			}
+		}
+	});
+
+	//***************************** Metodos Callback ******************************
+	ObjectGroupProto.createdCallback = function () {
+		// all properties of the object must be set here, this is just a test.
+		this.style.position= 'absolute';
+		var shadow = this.createShadowRoot();
+		if(ObjectGroup.width === undefined || ObjectGroup.width === null)  ObjectGroup.width = 500;
+		if(ObjectGroup.height === undefined || ObjectGroup.height === null)  ObjectGroup.height = 500;
+		//canvas setting
+		var t = document.createElement("canvas");
+		t.style.position = 'absolute';
+		ObjectGroup.width === undefined || ObjectGroup.width === null ? t.width = 500 : t.width = ObjectGroup.width;
+		ObjectGroup.height === undefined || ObjectGroup.height === null ? t.height = 500 : t.height = ObjectGroup.height;
+		//margen y borde del canvas
+		t.style.margin = 20;
+		t.style.borderStyle = 'solid';
+		t.style.borderColor = 'black';
+		t.style.borderWidth = 'thin';
+		shadow.appendChild(t);
+		//creando div de titulo
+		var titlediv = document.createElement('div');
+		titlediv.style.position = 'absolute';
+		shadow.appendChild(titlediv);
+		//atributos del titulo
+		titlediv.style.top = 10;
+		titlediv.style.fontFamily = 'Arial';
+		titlediv.style.fontSize = 'medium';
+		titlediv.style.color = 'red';
+		title === undefined ? titlediv.innerHTML = 'Titulo Opcional' : titlediv.innerHTML = title;
+		titlediv.style.backgroundColor = '#000000';
+		//para centrar el titulo se debe calcular cuanto debe ser el left
+		setTimeout(function () {
+			titlediv.style.left = calculateLeft(titlediv, t);
+		}, 10);
+	};
+        
+	//*****************************Metodos Privados******************************
+	function calculateLeft(div, can) {
+		var divsize = parseInt(div.offsetWidth);
+		var canvsize = parseInt(can.width);
+		return String(((canvsize - divsize) / 2) + 29) + 'px';
+
+	}
+
+	//*****************************Metodos Publicos******************************
+
 	ObjectGroupProto.setDimension = function (w, h) {
 		this.width = w;
 		this.height = h;
 	};
-	/*ObjectGroupProto.setPosition = function(x,y){
-	 this.shadowRoot.getElementsByTagName('canvas')[0].style.left=x;
-	 this.shadowRoot.getElementsByTagName('canvas')[0].style.top=y;
-	 for(var i = 1; i< this.shadowRoot.children.length;i++){
-	 if(i==1){
-	 var opvarx = calculateLeft(this.shadowRoot.children[1],this.shadowRoot.getElementsByTagName('canvas')[0]);
-	 var opvary= y+20;
-	 opvarx=parseInt(opvarx)+x;
-	 console.log(opvarx);
-	 this.shadowRoot.children[i].style.left='386px';
-	 this.shadowRoot.children[i].style.top=opvary;
-	 }
-	 }
-	 };*/
-
+        
+	ObjectGroupProto.setPosition = function(x,y){
+	 this.left=x;
+	 this.top=y;
+	 };
+        
+	ObjectGroupProto.addObject = function(object,x,y){
+		object.style.position = 'absolute';
+		//for it not to overshadow the title
+		var titleh=parseInt(this.shadowRoot.getElementsByTagName('div')[0].style.top);
+		typeof x ==='string'? object.style.left=x:object.style.left=x+'px';
+		typeof y ==='string'? object.style.top=parseInt(y)+titleh+'px':object.style.top=y+titleh+'px';
+		this.shadowRoot.appendChild(object);
+		console.log(object.style.left);
+	};
+        
+	ObjectGroupProto.show = function (){
+		this.style.display='block';
+	};
+        
+	ObjectGroupProto.hide = function(){
+		this.style.display='none';
+	};
+        
+	ObjectGroupProto.setColorTitle = function(color) {
+		if (typeof color === 'string') {
+			this.shadowRoot.getElementsByTagName('div')[0].style.color = color;
+		}
+	};
+        
+	ObjectGroupProto.setFontFamilyTitle = function(fontfam){
+		if(typeof fontfam === 'string'){
+			this.shadowRoot.getElementsByTagName('div')[0].style.fontFamily = fontfam;
+		}
+	};
+        
+	ObjectGroupProto.setFontSizeTitle = function(size){
+		if(typeof size === 'string'){
+			this.shadowRoot.getElementsByTagName('div')[0].style.fontSize = size;
+		}
+	};
+        
+	ObjectGroupProto.setBgColorTitle = function(bg){
+		if(typeof bg === 'string'){
+			this.shadowRoot.getElementsByTagName('div')[0].style.backgroundColor = bg;
+		}
+	};
+        
+	ObjectGroupProto.setBorderStyle = function(style){
+		if(typeof style === 'string'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderStyle = style;
+		}
+	};
+        
+	ObjectGroupProto.setBorderColor = function(bordercol){
+		if(typeof bordercol === 'string'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderColor = bordercol;
+		}
+	};
+        
+	ObjectGroupProto.setBorderWidth = function(width){
+		if(typeof width === 'string'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderWidth = width;
+		}
+	};
+        
 	//***************************** Registro de la clase ************************
 
 	var ObjectGroup = document.registerElement('x-objectgroup', {prototype: ObjectGroupProto, extends: "div"});
@@ -748,4 +895,3 @@ var ObjectGroup = function (w, h, title) {
 
 
 };
-
