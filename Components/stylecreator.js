@@ -605,12 +605,55 @@ var Edit = function (w, h, title) {
     };
     
     EditProto.isDigit = function () {
-        return (/^[\d]+$/g.test(this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value));
+        if (!/^[-\d]+$/g.test(this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value) || this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value.indexOf("-") > 0 || !this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value.lastIndexOf("-") == this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value.indexOf("-")) 
+            return false;
+        else
+            return true;
     };
     
     EditProto.isLetter = function () {
         return (/^[A-z]+$/g.test(this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value));
     }; 
+    
+    EditProto.isDate = function () {
+        var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(this.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value);
+        if (matches == null) 
+            return false;
+        
+        var d = matches[1];
+        var m = matches[2] - 1;
+        var y = matches[3];
+        var composedDate = new Date(y, m, d);
+        
+        return composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y;
+    };
+    
+    EditProto.setMask = function (mask) {
+        var self = this;
+        self.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].onchange = function (e) {
+            switch (mask) {
+                    case "empty":
+                        if (!self.isEmpty())
+                            self.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value = "";
+                    break;
+                    case "email":
+                        if (!self.isEmail()) 
+                            self.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value = "";
+                    break;
+                    case "digit":
+                        if (!self.isDigit())
+                            self.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value = "";
+                    break;
+                    case "letter":
+                        if (!self.isLetter())
+                            self.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value = "";
+                    break;
+                    case "date":
+                        if (!self.isDate())
+                            self.shadowRoot.getElementsByTagName('table')[0].rows[0].cells[2].getElementsByTagName('input')[0].value = "";
+            };
+        };
+    };
 
 	//***************************** Metodos Callback ******************************
 
@@ -634,9 +677,10 @@ var Edit = function (w, h, title) {
 		t.rows[0].cells[0].appendChild(l);
 
 		var i = document.createElement("input");
-		i.setAttribute("type", "text");
 		i.style.width = w;
 		i.style.height = h;
+        i.style.paddingLeft = "5px";
+        i.style.outline = 0;
 		t.rows[0].cells[2].appendChild(i);
 	};
 
@@ -648,102 +692,8 @@ var Edit = function (w, h, title) {
 
 };
 
+
 var ObjectGroup = function (w, h, title) {
-
-	//***************************** Declaracion de propiedades ********************
-	var ObjectGroupProto = Object.create(HTMLDivElement.prototype);
-	var s = new Style();
-
-	Object.defineProperties(ObjectGroupProto, {
-		"width": {
-			set: function (newVal) {
-				this.style.width = newVal;
-				this.shadowRoot.getElementsByTagName('canvas')[0].width = newVal;
-				setTimeout(function () {
-					this.shadowRoot.getElementsByTagName('div')[0].style.left = calculateLeft(this.shadowRoot.getElementsByTagName('div')[0], this.shadowRoot.getElementsByTagName('canvas')[0]);
-				}, 10);
-			},
-			get: function () {
-				return this.style.width;
-			}
-		}, "height": {
-			set: function (newVal) {
-				this.style.height = newVal;
-				this.shadowRoot.getElementsByTagName('canvas')[0].height = newVal;
-				this.shadowRoot.getElementsByTagName('div')[0]=parseInt(this.shadowRoot.getElementsByTagName('canvas')[0].style.top)+20+'px';
-			},
-			get: function () {
-				return this.style.height;
-			}
-		}, "header": {
-			set: function (newVal) {
-				this.shadowRoot.getElementsByTagName('div')[0].innerHTML = newVal;
-			},
-			get: function () {
-				return this.shadowRoot.getElementsByTagName('div')[0].innerHTML;
-			}
-		}, "left" :{
-			set: function(newVal){
-				this.style.left=newVal;
-			},
-			get: function(){
-				return this.style.left;
-			}
-		}, "top" :{
-				set: function(newVal){
-					this.style.top=newVal;
-				},
-				get: function(){
-					return this.style.top;
-			}
-		}
-	});
-
-	//***************************** Metodos Callback ******************************
-	ObjectGroupProto.createdCallback = function () {
-		// all properties of the object must be set here, this is just a test.
-		this.style.position= 'absolute';
-		var shadow = this.createShadowRoot();
-		if(ObjectGroup.width === undefined || ObjectGroup.width === null)  ObjectGroup.width = 500;
-		if(ObjectGroup.height === undefined || ObjectGroup.height === null)  ObjectGroup.height = 500;
-		//canvas setting
-		var t = document.createElement("canvas");
-		t.style.position = 'absolute';
-		ObjectGroup.width === undefined || ObjectGroup.width === null ? t.width = 500 : t.width = ObjectGroup.width;
-		ObjectGroup.height === undefined || ObjectGroup.height === null ? t.height = 500 : t.height = ObjectGroup.height;
-		//margen y borde del canvas
-		t.style.margin = 20;
-		t.style.borderStyle = 'solid';
-		t.style.borderColor = 'black';
-		t.style.borderWidth = 'thin';
-		shadow.appendChild(t);
-		//creando div de titulo
-		var titlediv = document.createElement('div');
-		titlediv.style.position = 'absolute';
-		shadow.appendChild(titlediv);
-		//atributos del titulo
-		titlediv.style.top = 20;
-		titlediv.style.fontFamily = 'Arial';
-		titlediv.style.fontSize = 'medium';
-		titlediv.style.color = 'red';
-		title === undefined ? titlediv.innerHTML = 'Titulo Opcional' : titlediv.innerHTML = title;
-		titlediv.style.backgroundColor = '#000000';
-		//para centrar el titulo se debe calcular cuanto debe ser el left
-		setTimeout(function () {
-			titlediv.style.left = calculateLeft(titlediv, t);
-		}, 10);
-	};
-	//*****************************Metodos Privados******************************
-	function calculateLeft(div, can) {
-		var divsize = parseInt(div.offsetWidth);
-		var canvsize = parseInt(can.width);
-		return String(((canvsize - divsize) / 2) + 29) + 'px';
-
-	}
-
-	//*****************************Metodos Publicos******************************
-
-	var ObjectGroup = function (w, h, title) {
 
 	//***************************** Declaracion de propiedades ********************
 	var ObjectGroupProto = Object.create(HTMLDivElement.prototype);

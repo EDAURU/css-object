@@ -56,6 +56,21 @@
 				}
 
 				document.body.appendChild(btnEmail);
+                
+                var btnDate = document.createElement("input");
+				btnDate.setAttribute("type", "button");
+				btnDate.value = "Date";
+				btnDate.onclick = function (e) {
+					if (i.isDate())
+						alert("Es una fecha valida");
+					else
+						alert("Es una fecha invalida");
+				}
+
+				document.body.appendChild(btnDate);
+                
+                i.setMask("date");
+                
 				/*i.hide();
 				alert('hide test');
 				i.show();
