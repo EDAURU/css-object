@@ -794,11 +794,15 @@ var ObjectGroup = function (w, h, title) {
 	ObjectGroupProto.setBorderColor = function(bordercol){
 		if(typeof bordercol === 'string'){
 			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderColor = bordercol;
+		}else if (typeof width === 'number'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderColor = bordercol+'px';
 		}
 	};
 	ObjectGroupProto.setBorderWidth = function(width){
 		if(typeof width === 'string'){
 			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderWidth = width;
+		} else if (typeof width === 'number'){
+			this.shadowRoot.getElementsByTagName('canvas')[0].style.borderWidth = width+'px';
 		}
 	};
 	//***************************** Registro de la clase ************************
@@ -808,4 +812,3 @@ var ObjectGroup = function (w, h, title) {
 
 
 };
-
