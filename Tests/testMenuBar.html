@@ -1,0 +1,23 @@
+<html>
+<head>
+    <script src ="MenuBar.js"></script>
+</head>
+<body>
+    <script>
+        var mb = new MenuBar();
+        mb.addItem("Archivo");
+        mb.addItem("Edicion");
+        mb.addItem("Ayuda");
+        mb.addSubMenuToItem("Archivo");
+        mb.addSubMenuToItem("Edicion");
+        mb.addSubMenuToItem("Ayuda");
+        mb.addItemToSubMenu("Archivo", "Nuevo", "gameCoin.png");
+        mb.addItemToSubMenu("Archivo", "Abrir", "CRACK2.png");
+        mb.addItemToSubMenu("Archivo", "Salir", null);
+        mb.addItemToSubMenu("Edicion", "Copiar", null);
+        mb.addItemToSubMenu("Edicion", "Pegar", null);
+        mb.addItemToSubMenu("Ayuda", "Acerca", null);
+        document.body.appendChild(mb);
+    </script>
+</body>
+</html>
