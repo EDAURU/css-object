@@ -134,6 +134,7 @@ var Edit = function (w, h, title) {
 				this.hiddenval = newVal;
 			},
 			get: function () {
+				if (this.hiddenval)
 				return this.hiddenval;
 			}
 		}, "enabled": {
@@ -183,7 +184,7 @@ var Edit = function (w, h, title) {
 	};
 
 	EditProto.clearHiddenValue = function () {
-		this.hidval = null;
+		this.hiddenval = null;
 	};
 
 	EditProto.setPassType = function () {
