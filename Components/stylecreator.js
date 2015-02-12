@@ -98,7 +98,6 @@ var Edit = function (w, h, title) {
 
 	var EditProto = Object.create(HTMLDivElement.prototype);
 	var s = new Style();
-	var hidval;
 
 
 	Object.defineProperties(EditProto, {
@@ -132,10 +131,10 @@ var Edit = function (w, h, title) {
 			}
 		}, "hiddenval": {
 			set: function (newVal) {
-				this.hidval = newVal;
+				this.hiddenval = newVal;
 			},
 			get: function () {
-				return this.hidval;
+				return this.hiddenval;
 			}
 		}, "enabled": {
 			set: function (newVal) {
@@ -658,10 +657,8 @@ var Edit = function (w, h, title) {
 	//***************************** Metodos Callback ******************************
 
 	EditProto.createdCallback = function () {
-
 		var shadow = this.createShadowRoot();
 		var t = document.createElement("table");
-
 		for (var i = 0; i < 1; i++) {
 			var row = t.insertRow();
 			for (var j = 0; j <= 2; j++) {
@@ -701,7 +698,7 @@ var ObjectGroup = function (w, h, title) {
 
 	Object.defineProperties(ObjectGroupProto, {
 		"width": {
-			set: function (newVal) {
+			set: function(newVal) {
 				this.style.width = newVal;
 				this.shadowRoot.getElementsByTagName('canvas')[0].width = newVal;
 				setTimeout(function () {
