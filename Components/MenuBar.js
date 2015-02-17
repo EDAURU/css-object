@@ -2,10 +2,32 @@ var MenuBar = function () {
 
     var MenuBarProto = Object.create(HTMLDivElement.prototype);
     
-    var getNumber = function (element) {
+    /*var getNumber = function (element) {
             return (element.replace("px", "") * 1);
+    };*/
+    //************************************* Metodos Publicos ******************************//
+    MenuBarProto.setBackgroundColor = function (color){
+        if(typeof color === 'string') this.shadowRoot.getElementsByTagName('table')[0].style.backgroundColor = color;
     };
-    
+    MenuBarProto.setSpacing = function(right,top,bottom,left){
+        var table= this.shadowRoot.getElementsByTagName('table')[0];
+        for(var i = 0; i<table.rows[0].cells.length-1;i++) {
+                right = typeof right === 'string'? parseInt(right):right;
+                top = typeof top === 'string'? parseInt(top):top;
+                bottom = typeof bottom === 'string'? parseInt(bottom):bottom;
+                left = typeof left === 'string'? parseInt(left):left;
+                table.rows[0].cells[i].style.paddingRight = right;
+                table.rows[0].cells[i].style.paddingLeft = left;
+                table.rows[0].cells[i].style.paddingBottom = bottom;
+                table.rows[0].cells[i].style.paddingTop = top;
+        }
+    };
+    MenuBarProto.appendTop = function(){
+        this.shadowRoot.getElementsByTagName('table')[0].style.top=0;
+        this.shadowRoot.getElementsByTagName('table')[0].style.left=0;
+        this.shadowRoot.getElementsByTagName('table')[0].style.paddingRight='100%';
+
+    }
     MenuBarProto.addItem = function (name) {
         var cell = this.shadowRoot.getElementsByTagName("table")[0].rows[0].insertCell();
         cell.innerHTML = name;
@@ -90,8 +112,8 @@ var MenuBar = function () {
             };
         
         }
-        
     };
+    //********************* funcion CallBack **********************//
     
     MenuBarProto.createdCallback = function () {
         var shadow = this.createShadowRoot();
@@ -104,6 +126,7 @@ var MenuBar = function () {
         shadow.appendChild(t);
         
     };
+    //********************************* Registro del Elemento**********************//
     
     var MenuBar = document.registerElement("x-menubar", {prototype: MenuBarProto, extends: "div"});
     

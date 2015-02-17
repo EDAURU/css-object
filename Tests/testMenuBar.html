@@ -1,6 +1,6 @@
 <html>
 <head>
-    <script src ="MenuBar.js"></script>
+    <script src ="../Components/MenuBar.js"></script>
 </head>
 <body>
     <script>
@@ -11,12 +11,15 @@
         mb.addSubMenuToItem("Archivo");
         mb.addSubMenuToItem("Edicion");
         mb.addSubMenuToItem("Ayuda");
-        mb.addItemToSubMenu("Archivo", "Nuevo", "gameCoin.png");
-        mb.addItemToSubMenu("Archivo", "Abrir", "CRACK2.png");
+        mb.addItemToSubMenu("Archivo", "Nuevo", null);
+        mb.addItemToSubMenu("Archivo", "Abrir", null);
         mb.addItemToSubMenu("Archivo", "Salir", null);
         mb.addItemToSubMenu("Edicion", "Copiar", null);
         mb.addItemToSubMenu("Edicion", "Pegar", null);
         mb.addItemToSubMenu("Ayuda", "Acerca", null);
+        mb.setBackgroundColor('red');
+        mb.setSpacing(25,5,5, 0);
+        mb.appendTop();
         document.body.appendChild(mb);
     </script>
 </body>
