@@ -32,10 +32,13 @@ var MenuBar = function () {
         var cell = this.shadowRoot.getElementsByTagName("table")[0].rows[0].insertCell();
         cell.innerHTML = name;
     };
-    
+    MenuBarProto.setFontFamily = function(font){
+        this.shadowRoot.getElementsByTagName('table')[0].style.fontFamily = font;
+    };
+
     MenuBarProto.addSubMenuToItem = function (idName) {
         var subMenu = document.createElement("div");
-        subMenu.style.backgroundColor = "#D3D7D6";
+        subMenu.style.backgroundColor = "rgba(247,247,247,0.7)";
         subMenu.style.position = "absolute";
         subMenu.style.display = "none";
         var self = this;
@@ -52,10 +55,10 @@ var MenuBar = function () {
                         subMenu.style.display = "block";
                     else
                         subMenu.style.display = "none";
-                    
-                  
+
+
                 }
-                
+
                 this.shadowRoot.getElementsByTagName("table")[0].rows[0].cells[i].onmouseout = function (e) {
                     if (e.target.innerHTML == idName)
                         e.target.style.backgroundColor = "initial";
@@ -63,8 +66,8 @@ var MenuBar = function () {
                         subMenu.style.display = "block";
                     else
                         subMenu.style.display = "none";
-                    
-                   
+
+
                 }
             };
         };
