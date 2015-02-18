@@ -8,7 +8,7 @@
         mb.addItem("Archivo");
         mb.addItem("Edicion");
         mb.addItem("Ayuda");
-        mb.addSubMenuToItem("Archivo");
+        /*mb.addSubMenuToItem("Archivo");
         mb.addSubMenuToItem("Edicion");
         mb.addSubMenuToItem("Ayuda");
         mb.addItemToSubMenu("Archivo", "Nuevo", null);
@@ -16,12 +16,20 @@
         mb.addItemToSubMenu("Archivo", "Salir", null);
         mb.addItemToSubMenu("Edicion", "Copiar", null);
         mb.addItemToSubMenu("Edicion", "Pegar", null);
-        mb.addItemToSubMenu("Ayuda", "Acerca", null);
+        mb.addItemToSubMenu("Ayuda", "Acerca", null);*/
+        document.body.appendChild(mb);
+        var c = {
+            image:['../images/openicon.png','../images/closeicon.png'],
+            description: ['Abrir','Cerrar'],
+            hotkey : ['Alt+Ctrl','Alt+F4'],
+            count:2
+        };
         mb.setBackgroundColor('rgba(247,247,247,0.7)');
         mb.setSpacing(25,5,5, 10);
         mb.setFontFamily('Lucida Grande');
         mb.appendTop();
-        document.body.appendChild(mb);
+
+        mb.addSubMenuToBar('Archivo',c);
     </script>
 </body>
 </html>
