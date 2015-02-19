@@ -19,17 +19,24 @@
         mb.addItemToSubMenu("Ayuda", "Acerca", null);*/
         document.body.appendChild(mb);
         var c = {
-            image:['../images/openicon.png','../images/closeicon.png'],
-            description: ['Abrir','Cerrar'],
-            hotkey : ['Alt+Ctrl','Alt+F4'],
-            count:2
+            image:['../images/openicon.png','../images/closeicon.png',''],
+            description: ['Abrir','Cerrar','Hola'],
+            hotkey : ['Alt+Ctrl','Alt+F4',''],
+            count:3
         };
+        var d = {
+            image:['','',''],
+            description: ['A','B','C'],
+            hotkey : ['Alt+Ctrl','Alt+F4',''],
+            count:3
+        }
         mb.setBackgroundColor('rgba(247,247,247,0.7)');
         mb.setSpacing(25,5,5, 10);
         mb.setFontFamily('Lucida Grande');
         mb.appendTop();
 
         mb.addSubMenuToBar('Archivo',c);
+        mb.addSubMenuToBar('Edicion',d);
     </script>
 </body>
 </html>

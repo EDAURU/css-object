@@ -89,6 +89,7 @@ var MenuBar = function () {
     };*/
     MenuBarProto.addSubMenuToBar = function (target,items){
         var a = new PopMenu();
+        console.log(a);
         var table = this.tableBar;
         a.top = table.style.height;
         var cell= findCell(target,table);
@@ -105,17 +106,24 @@ var MenuBar = function () {
             a.hide();
         };
         a.MouseOverEvent('rgba(249,120,40,0.3)');
+        console.log( this.tableBar.rows[0].cells[0].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')===null);//getElementById('PopMenuBar'));
         //console.log(this.tableBar.rows[0].cells[0].getElementsByTagName('div')[0].shadowRoot.getElementsByTagName('div')[0].getEle);
         //console.log(this.tableBar.rows[0].cells[0].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar'));
     };
-    MenuBarProto.addSubMenuToSubMenu = function(targets,items){
-        //var sb= new PopMenu();
-        //console.log(this.tableBar.rows[0].cells[findCell(bartarget)].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')[0]);
-    };
+/*    MenuBarProto.addSubMenuToSubMenu = function(target,items){
+        for(var i=0;i<this.tableBar.rows[0].cells.length;i++){
+            if(this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')==undefined)
+
+        }
+        for(var i =0;i<)
+        var sb= new PopMenu();
+        console.log(this.tableBar.rows[0].cells[findCell(bartarget)].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')[0]);
+    };*/
 
     function findCell(cell,table){
         for (var i = 0; i < table.rows[0].cells.length; i++)
-            if (table.rows[0].cells[i].innerHTML == cell) return i;
+            if (table.rows[0].cells[i].innerHTML==cell)
+                return i;
     }
     /*MenuBarProto.addItemToSubMenu = function (idName, itemName, imgCell) {
         var self = this;
@@ -207,14 +215,13 @@ var PopMenu = function(){
                     return this.shadowRoot.getElementsByTagName('div')[0].getElementsByTagName('table')[0];
                 }
             },
-            "rowcolor":{
-                set: function (newVal){
-                    this.rowcolor=newVal;
-                    },
-                get: function(){
-                    if(this.rowcolor)
-                    return this.rowcolor;
-                }
+            "row_color":{
+                value: '',
+                writable: true
+            },
+            "count":{
+                value:0,
+                writable:true
             }
         });
     PopMenuProto.createdCallback = function (){
@@ -233,19 +240,20 @@ var PopMenu = function(){
         img.style.width = '10px';
         img.style.height = '10px';
         img.src = item.image;
-        if(img.src) this.table.rows[this.table.rows.length-1].insertCell(0).appendChild(img);
-        if(item.description)  this.table.rows[this.table.rows.length-1].insertCell(1).innerHTML = item.description;
-        if(item.hotkey) this.table.rows[this.table.rows.length-1].insertCell(2).innerHTML= item.hotkey;
-        this.table.rows[this.table.rows.length-1].cells[0].style.border='none';
-        this.table.rows[this.table.rows.length-1].cells[1].style.border='none';
-        this.table.rows[this.table.rows.length-1].cells[2].style.border='none';
+        var c1= this.table.rows[this.table.rows.length-1].insertCell(0);
+        var c2=this.table.rows[this.table.rows.length-1].insertCell(1);
+        var c3=this.table.rows[this.table.rows.length-1].insertCell(2);
+        if(item.image) c1.appendChild(img);
+        item.description?  c2.innerHTML = item.description: c2.innerHTML='not Specified';
+        item.hotkey? c3.innerHTML= item.hotkey: c3.innerHTML='';
     };
     PopMenuProto.addItems = function(items){
-        for(var i = 0;i<items.count;i++){
+        this.count=items.count;
+        for(var i = 0;i<this.count;i++){
             var demoitem = new Object();
-            demoitem.image = items.image[i];
-            demoitem.description = items.description[i];
-            demoitem.hotkey = items.hotkey[i];
+            demoitem.image = items.image[i]==''? null:items.image[i];
+            demoitem.description = items.description[i]==''? null:items.description[i];
+            demoitem.hotkey = items.hotkey[i]==''?null:items.hotkey[i];
             this.addItem(demoitem);
         }
     };
@@ -281,7 +289,14 @@ var PopMenu = function(){
             this.table.rows[i].cells[2].style.fontSize = size;
         }
     };
+    var PopMenu
+    try{
+         PopMenu = document.registerElement("x-popmenu", {prototype: PopMenuProto, extends: "div"});
+        return new PopMenu
+    } catch(e){
+        console.log('PopMenu already Exists'+e);
+        PopMenu = document.createElement('div','x-popmenu');
+        return PopMenu;
+    };
 
-    var PopMenu = document.registerElement("x-popmenu", {prototype: PopMenuProto, extends: "div"});
-    return new PopMenu();
 };
