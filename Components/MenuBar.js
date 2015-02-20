@@ -1,7 +1,8 @@
+var key = [];
+var hk = [];
 var MenuBar = function () {
 
     var MenuBarProto = Object.create(HTMLDivElement.prototype);
-
     Object.defineProperties(MenuBarProto,{
        "tableBar":{
            get: function(){
@@ -89,7 +90,6 @@ var MenuBar = function () {
     };*/
     MenuBarProto.addSubMenuToBar = function (target,items){
         var a = new PopMenu();
-        console.log(a);
         var table = this.tableBar;
         a.top = table.style.height;
         var cell= findCell(target,table);
@@ -99,27 +99,43 @@ var MenuBar = function () {
         a.hide();
         a.setFontSize('13px');
         a.setFontSizeHotKey('10px');
-        table.rows[0].cells[cell].onclick = function(){
+        table.rows[0].cells[cell].onclick = function() {
             a.hidden ? a.show() : a.hide();
         };
-        a.onmouseleave = function(){
+        
+        a.onmouseout = function(){
             a.hide();
         };
         a.MouseOverEvent('rgba(249,120,40,0.3)');
-        console.log( this.tableBar.rows[0].cells[0].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')===null);//getElementById('PopMenuBar'));
+        for (var i = 0; i < items.count; i++) {
+            hk.push(items.hotkey[i]);
+        };
+        //getElementById('PopMenuBar'));
         //console.log(this.tableBar.rows[0].cells[0].getElementsByTagName('div')[0].shadowRoot.getElementsByTagName('div')[0].getEle);
         //console.log(this.tableBar.rows[0].cells[0].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar'));
     };
-/*    MenuBarProto.addSubMenuToSubMenu = function(target,items){
-        for(var i=0;i<this.tableBar.rows[0].cells.length;i++){
-            if(this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')==undefined)
+    
+    MenuBarProto.addSubMenuToSubMenu = function (target, items) {
+        for (var i = 0; i < this.tableBar.rows[0].getElementsByTagName('div').length; i++) {
+            for (var j = 0; j < this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar').rows.length; j++) {
+                if (this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar').rows[j].cells[1].innerHTML == target) {
+                    var a = new PopMenu();
+                    var table = this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar');
+                    a.top = table.style.height;
+                    a.addItems(items);
+                    a.setBackgroundColor(table.style.backgroundColor);
+                    a.show();
+                    a.setFontSize('13px');
+                    a.setFontSizeHotKey('10px');
+                    this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar').rows[j].cells[3].appendChild(a);
+                    a.MouseOverEvent('rgba(249,120,40,0.3)');
+    
+                }
+            }
 
         }
-        for(var i =0;i<)
-        var sb= new PopMenu();
-        console.log(this.tableBar.rows[0].cells[findCell(bartarget)].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')[0]);
-    };*/
-
+    };
+    
     function findCell(cell,table){
         for (var i = 0; i < table.rows[0].cells.length; i++)
             if (table.rows[0].cells[i].innerHTML==cell)
@@ -219,7 +235,7 @@ var PopMenu = function(){
                 value: '',
                 writable: true
             },
-            "count":{
+            "length":{
                 value:0,
                 writable:true
             }
@@ -235,26 +251,39 @@ var PopMenu = function(){
         shadow.appendChild(di);
     };
     PopMenuProto.addItem = function(item){
-        this.table.insertRow(this.table.rows.length);
+        var row = this.table.insertRow(this.table.rows.length);
         var img = new Image();
+        var f;
         img.style.width = '10px';
         img.style.height = '10px';
         img.src = item.image;
-        var c1= this.table.rows[this.table.rows.length-1].insertCell(0);
-        var c2=this.table.rows[this.table.rows.length-1].insertCell(1);
-        var c3=this.table.rows[this.table.rows.length-1].insertCell(2);
+        var c1 = this.table.rows[this.table.rows.length - 1].insertCell(0);
+        var c2 = this.table.rows[this.table.rows.length - 1].insertCell(1);
+        var c3 = this.table.rows[this.table.rows.length - 1].insertCell(2);
+        var c4 = this.table.rows[this.table.rows.length - 1].insertCell(3);
         if(item.image) c1.appendChild(img);
         item.description?  c2.innerHTML = item.description: c2.innerHTML='not Specified';
-        item.hotkey? c3.innerHTML= item.hotkey: c3.innerHTML='';
+        item.hotkey ? c3.innerHTML= "Ctrl+" + item.hotkey: c3.innerHTML='';
+        if (item.function) {
+            f = new Function(item.function)
+            row.onclick = function (e) {
+                f();
+            };
+            window.onkeydown = function (e) {
+                f();
+                console.log(f);
+            };
+        };
     };
     PopMenuProto.addItems = function(items){
-        this.count=items.count;
-        for(var i = 0;i<this.count;i++){
-            var demoitem = new Object();
-            demoitem.image = items.image[i]==''? null:items.image[i];
-            demoitem.description = items.description[i]==''? null:items.description[i];
-            demoitem.hotkey = items.hotkey[i]==''?null:items.hotkey[i];
-            this.addItem(demoitem);
+        this.length = items.count;
+        for(var i = 0; i < this.length; i++){
+            var demoItem = new Object();
+            demoItem.image = items.image[i]==''? null:items.image[i];
+            demoItem.description = items.description[i]==''? null:items.description[i];
+            demoItem.hotkey = items.hotkey[i]==''?null:items.hotkey[i];
+            demoItem.function = items.function[i]==''?null:items.function[i];
+            this.addItem(demoItem);
         }
     };
     PopMenuProto.MouseOverEvent = function(color){
@@ -274,11 +303,15 @@ var PopMenu = function(){
             this.row_color=color;
     };
     PopMenuProto.hide = function(){
+        
         this.style.display = 'none';
+        this.style.transition = "all 5s";
         this.hidden=true;
     };
     PopMenuProto.show = function(){
+        
         this.style.display = 'block';
+        this.style.transition = "all 5s";
         this.hidden = false;
     };
     PopMenuProto.setFontSize = function(size){
@@ -289,12 +322,16 @@ var PopMenu = function(){
             this.table.rows[i].cells[2].style.fontSize = size;
         }
     };
+    
+    PopMenuProto.getRow = function (index) {
+        return this.table.rows[index];
+    };
     var PopMenu
     try{
-         PopMenu = document.registerElement("x-popmenu", {prototype: PopMenuProto, extends: "div"});
+        PopMenu = document.registerElement("x-popmenu", {prototype: PopMenuProto, extends: "div"});
         return new PopMenu
     } catch(e){
-        console.log('PopMenu already Exists'+e);
+        console.log('PopMenu already Exists '+e);
         PopMenu = document.createElement('div','x-popmenu');
         return PopMenu;
     };
