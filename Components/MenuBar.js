@@ -91,8 +91,9 @@ var MenuBar = function () {
     MenuBarProto.addSubMenuToBar = function (target,items){
         var a = new PopMenu();
         var table = this.tableBar;
-        a.top = table.style.height;
+        a.top = table.offsetHeight;
         var cell= findCell(target,table);
+        a.left=calculateLeft(cell,table);
         a.addItems(items);
         table.rows[0].cells[cell].appendChild(a);
         a.setBackgroundColor(table.style.backgroundColor);
@@ -102,10 +103,10 @@ var MenuBar = function () {
         table.rows[0].cells[cell].onclick = function() {
             a.hidden ? a.show() : a.hide();
         };
-        
         a.onmouseout = function(){
             a.hide();
         };
+
         a.MouseOverEvent('rgba(249,120,40,0.3)');
         for (var i = 0; i < items.count; i++) {
             hk.push(items.hotkey[i]);
@@ -117,29 +118,65 @@ var MenuBar = function () {
     
     MenuBarProto.addSubMenuToSubMenu = function (target, items) {
         for (var i = 0; i < this.tableBar.rows[0].getElementsByTagName('div').length; i++) {
-            for (var j = 0; j < this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar').rows.length; j++) {
-                if (this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar').rows[j].cells[1].innerHTML == target) {
-                    var a = new PopMenu();
-                    var table = this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar');
-                    a.top = table.style.height;
-                    a.addItems(items);
-                    a.setBackgroundColor(table.style.backgroundColor);
-                    a.show();
-                    a.setFontSize('13px');
-                    a.setFontSizeHotKey('10px');
-                    this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar').rows[j].cells[3].appendChild(a);
-                    a.MouseOverEvent('rgba(249,120,40,0.3)');
-    
+            if(this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar') !== undefined);
+                var cell=findSubmenus(this.tableBar.rows[0].cells[i].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar'),target);
+            if(cell !== null) {
+                   var a = new PopMenu();
+                   var table = cell[1];
+                   a.top = table.style.height;
+                   console.log(table.parentElement.offsetHeight)
+                   calculatePosition(table,cell[2]);
+                   a.addItems(items);
+                   a.setBackgroundColor(table.style.backgroundColor);
+                   a.show();
+                   a.setFontSize('13px');
+                   a.setFontSizeHotKey('10px');
+                   cell[0].appendChild(a);
+                   a.MouseOverEvent('rgba(249,120,40,0.3)');
+                   return;
+            }
+        }
+    };
+    function findSubmenus(pop,target){
+        for(var i = 0; i< pop.rows.length;i++){
+            if(pop.rows[i].cells[1].innerHTML===target){
+                return [pop.rows[i].cells[1],pop,i];
+            }else{
+                try {var alpha =pop.rows[i].cells[3].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar')}
+                catch(e){ alpha = undefined}
+                if(alpha!==undefined){
+                    var found = findSubmenus(pop.rows[i].cells[3].getElementsByTagName('div')[0].shadowRoot.getElementById('PopMenuBar'),target);
+                    if(found !== null){
+                        return found;
+                    }
                 }
             }
-
         }
+        return null;
+    }
+    function calculatePosition(table,row){
+        var pop = table.parentElement;
+        var acum= 0;
+        var left = parseInt(pop.style.left)+table.rows[0].offsetWidth;
+        for(var i = row-1; i>=0;i--){
+            acum+= parseInt(table.rows[i].offsetHeight);
+        }
+        var top = parseInt(pop.style.top)+acum;
+        console.log(left);
+        console.log(top);
     };
     
     function findCell(cell,table){
         for (var i = 0; i < table.rows[0].cells.length; i++)
             if (table.rows[0].cells[i].innerHTML==cell)
                 return i;
+    }
+    function calculateLeft(cell, table){
+        var acum=0;
+        for(var i= cell-1; i>=0; i--){
+            acum+=parseInt(table.rows[0].cells[i].offsetWidth);
+        }
+        return acum;
     }
     /*MenuBarProto.addItemToSubMenu = function (idName, itemName, imgCell) {
         var self = this;
@@ -215,6 +252,14 @@ var PopMenu = function(){
                 get: function(){
                     return this.shadowRoot.getElementsByTagName('div')[0].style.top;
                     }
+            },
+            "left":{
+                set: function(newVal){
+                    this.shadowRoot.getElementsByTagName('div')[0].style.left=newVal;
+                },
+                get: function(){
+                    return this.shadowRoot.getElementsByTagName('div')[0].style.left;
+                }
             },
             "hidden": {
                 set: function (newVal) {
