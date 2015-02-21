@@ -23,7 +23,6 @@
             description: ['Abrir','Cerrar'],
             hotkey: ['A','F'],
             function: ['console.log("Hola desde el abrir");', ''],
-            submenu: false,
             count:2
         };
         
@@ -32,7 +31,6 @@
             description: ['Modificar','Nuevo'],
             hotkey: ['M','F'],
             function: ['console.log("Hola desde el abrir");', ''],
-            submenu: false,
             count:2
         };
         
@@ -41,7 +39,6 @@
             description: ['A','B','C'],
             hotkey : ['U','T',''],
             function: ['console.log("Hola desde el A");', '', ''],
-            submenu: true,
             count:3
         }
         mb.setBackgroundColor('rgba(247,247,247,0.7)');
@@ -51,8 +48,9 @@
 
         mb.addSubMenuToBar('Archivo',c);
         mb.addSubMenuToBar('Edicion',d);
-        mb.addSubMenuToSubMenu("Abrir", f);
-        mb.addSubMenuToSubMenu("A", d);
+        mb.addSubMenuToSubMenu("Cerrar", f);
+        mb.addSubMenuToSubMenu("B", d);
+        mb.addSubMenuToSubMenu('Modificar',d);
     </script>
 </body>
 </html>
